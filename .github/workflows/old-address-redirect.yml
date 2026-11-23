@@ -1,0 +1,22 @@
+# The old GitHub Pages address forwards every page to the same page on the Cloudflare site.
+name: Old address redirect
+on:
+  push:
+    paths: ["redirect/**", ".github/workflows/old-address-redirect.yml"]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: redirect
+      - uses: actions/deploy-pages@v4
