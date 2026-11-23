@@ -13,9 +13,11 @@ from pathlib import Path
 
 import httpx
 
-SIGNUP = "https://laughing-tender-pilot-flow.base44.app/#start"
-BASE_URL = "https://tenderpilot-pages.example"  # replaced by the real address in the workflow (SITE_BASE)
-OUT = Path(__file__).resolve().parent / "public"
+SIGNUP = "/#start"  # the sign-up form on the home page
+BASE_URL = "https://tenderpilot.pages.dev"  # set SITE_BASE in the Cloudflare build settings once there is a domain
+ROOT = Path(__file__).resolve().parent
+OUT = ROOT / "public"
+TEN = OUT / "tenders"  # tender pages live under /tenders/
 TED = "https://api.ted.europa.eu/v3/notices/search"
 
 TRADES = {  # slug: (name, plural customer word, CPV codes)
@@ -98,8 +100,8 @@ footer{padding:28px 0 40px;font-size:13px;color:var(--soft)}"""
 def page(title: str, desc: str, body: str, path: str) -> str:
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title><meta name="description" content="{html.escape(desc)}">
-<link rel="canonical" href="{BASE_URL}/{path}"><style>{CSS}</style></head><body><div class="w">
-<nav><a href="{BASE_URL}/">Tender<span>Pilot</span></a></nav>{body}
+<link rel="canonical" href="{BASE_URL}/tenders/{path}"><style>{CSS}</style></head><body><div class="w">
+<nav><a href="/">Tender<span>Pilot</span></a> <a href="/tenders/" style="font-size:14px;font-weight:400;margin-left:14px;color:inherit;opacity:.7">All open tenders</a></nav>{body}
 <footer>Updated {date.today():%d %B %Y}. Data from TED, the EU's official public tender database. Always read the official notice before you apply.</footer>
 </div></body></html>"""
 
@@ -120,7 +122,11 @@ def tender_card(t) -> str:
 
 
 def build():
-    OUT.mkdir(exist_ok=True)
+    import shutil
+    if OUT.exists():
+        shutil.rmtree(OUT)
+    TEN.mkdir(parents=True)
+    shutil.copytree(ROOT / "site", OUT, dirs_exist_ok=True)  # home, privacy, unsubscribe
     urls, index_links, totals = [], [], defaultdict(int)
     for slug, (name, people, cpv) in TRADES.items():
         tenders = fetch_trade(cpv)
@@ -142,7 +148,7 @@ def build():
             listing = "".join(tender_card(t) for t in items[:40]) or (
                 f'<p class="soft">No open {name.lower()} tenders in {cname} were published on TED in the last 30 days. '
                 f'New ones appear often. Get them by email the morning they are published.</p>')
-            (OUT / path).write_text(page(title, desc, intro + cta(people, f"{name.lower()} tenders in {cname}") + listing, path), encoding="utf-8")
+            (TEN / path).write_text(page(title, desc, intro + cta(people, f"{name.lower()} tenders in {cname}") + listing, path), encoding="utf-8")
             urls.append(path)
             links.append(f'<a href="{path}">{cname} ({n})</a>')
             totals[slug] += n
@@ -150,7 +156,7 @@ def build():
         title = f"{name} tenders in Europe: {totals[slug]} open now"
         body = (f'<p class="eye">{name}</p><h1>{title}</h1><p class="soft">Open public {name.lower()} tenders by country, updated daily.</p>'
                 f'<div class="grid">{"".join(links)}</div>' + cta(people, f"{name.lower()} tenders"))
-        (OUT / hub).write_text(page(title, f"Open public {name.lower()} tenders in every EU country, updated daily.", body, hub), encoding="utf-8")
+        (TEN / hub).write_text(page(title, f"Open public {name.lower()} tenders in every EU country, updated daily.", body, hub), encoding="utf-8")
         urls.append(hub)
         index_links.append(f'<a href="{hub}">{name} ({totals[slug]})</a>')
         print(f"{name}: {len(tenders)} open tenders")
@@ -158,10 +164,11 @@ def build():
     body = ('<p class="eye">Public tenders, updated daily</p><h1>Find government contracts your business can win</h1>'
             '<p class="soft">Every open public tender in the EU, sorted by trade and country. Pick your trade:</p>'
             f'<div class="grid">{"".join(index_links)}</div>' + cta("small businesses", "matching tenders"))
-    (OUT / "index.html").write_text(page("Public tenders by trade and country | TenderPilot",
+    (TEN / "index.html").write_text(page("Public tenders by trade and country | TenderPilot",
                                          "Open government tenders in every EU country, by trade, updated daily.", body, ""), encoding="utf-8")
     urls.append("")
-    sitemap = "".join(f"<url><loc>{BASE_URL}/{u}</loc><lastmod>{date.today()}</lastmod></url>" for u in urls)
+    pages = [""] + [f"tenders/{u}" for u in urls] + ["privacy"]
+    sitemap = "".join(f"<url><loc>{BASE_URL}/{u}</loc><lastmod>{date.today()}</lastmod></url>" for u in pages)
     (OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sitemap}</urlset>', encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")

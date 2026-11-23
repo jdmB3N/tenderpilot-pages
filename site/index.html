@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TenderPilot — government contracts you can win</title>
+<meta name="description" content="Every morning, the public tenders your business can win, in one short email. AI-scored, plain English, with the deadline. Free for 14 days, no card.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#070A12;--bg2:#0C1120;--ink:#F5F7FA;--soft:#A0ABBA;--line:rgba(245,247,250,.09);--glass:rgba(245,247,250,.04);--amber:#F7AC3B;--amber2:#FCAE55;--cyan:#28E1F6;--on-amber:#090C16}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,ui-sans-serif,system-ui,sans-serif;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 50% at 15% 0%,rgba(247,172,59,.10),transparent 60%),radial-gradient(50% 50% at 90% 20%,rgba(40,225,246,.08),transparent 60%);z-index:0}
+.w{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.btn,.logo{font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);background:rgba(7,10,18,.72);border-bottom:1px solid var(--line)}
+nav .w{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;text-decoration:none}
+.logo i{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--amber),var(--cyan));display:grid;place-items:center;font-style:normal;color:var(--on-amber);font-size:16px}
+.logo b{color:var(--amber);font-weight:700}
+.links{display:flex;gap:26px;font-size:14px;color:var(--soft)}
+.links a{text-decoration:none}.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:var(--on-amber);font-weight:600;border:0;border-radius:999px;padding:12px 22px;font-size:15px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(247,172,59,.25)}
+.btn.small{padding:9px 16px;font-size:14px}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:80px 0 72px}
+.tag{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:6px 14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--soft)}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}
+h1{font-size:clamp(40px,6.4vw,76px);line-height:1.02;letter-spacing:-.02em;margin:22px 0 20px}
+.grad{background:linear-gradient(100deg,var(--amber) 0%,var(--amber2) 40%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--soft);font-size:18px;max-width:34em;margin:0 0 28px}
+.cta-row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.fine{color:var(--soft);font-size:13px}
+.facts{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px;font-size:11px;color:var(--soft)}
+.facts span{border-left:2px solid var(--amber);padding-left:10px}
+.mail{background:linear-gradient(180deg,rgba(245,247,250,.06),rgba(245,247,250,.02));border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.mail .top{display:flex;justify-content:space-between;font-size:12px;color:var(--soft)}
+.mail .top b{color:var(--ink);font-family:"Space Grotesk",sans-serif}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--cyan);margin-right:6px;box-shadow:0 0 10px var(--cyan)}
+.mail h3{margin:14px 0 4px;font-size:16px;color:var(--soft);font-weight:500}
+.mail h4{margin:0 0 14px;font-family:"Space Grotesk",sans-serif;font-size:20px}
+.job{display:flex;gap:14px;align-items:flex-start;border-top:1px solid var(--line);padding:14px 0}
+.pct{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--on-amber);background:var(--amber);border-radius:8px;padding:3px 8px}
+.job b{display:block;font-size:15px}.job small{color:var(--soft);font-size:12px}
+.bar{height:3px;border-radius:2px;background:linear-gradient(90deg,var(--amber),var(--cyan));margin-top:8px}
+.mail .foot{font-size:10px;letter-spacing:1.5px;color:var(--soft);margin-top:6px}
+section{padding:80px 0}
+h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.01em;margin:0 0 12px}
+.sub{color:var(--soft);max-width:36em;margin:0 0 40px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:26px}
+.card .n{font-size:13px;color:var(--amber)}
+.card h3{font-size:22px;margin:12px 0 8px}.card p{color:var(--soft);margin:0}
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.track{display:flex;gap:12px;width:max-content;animation:slide 38s linear infinite}
+.track span{border:1px solid var(--line);background:var(--glass);border-radius:999px;padding:8px 16px;font-size:14px;white-space:nowrap}
+@keyframes slide{to{transform:translateX(-50%)}}
+.label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--soft);margin:0 0 14px}
+.signup{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+.ticks{list-style:none;padding:0;margin:24px 0 0;display:grid;gap:10px;color:var(--soft)}
+.ticks li::before{content:"✓";color:var(--amber);margin-right:10px;font-weight:700}
+form{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:26px;display:grid;gap:16px}
+label{display:grid;gap:6px;font-size:14px;font-weight:500}
+.hint{font-weight:400;color:var(--soft);font-size:12px}
+input,textarea,select{font:inherit;color:var(--ink);background:rgba(7,10,18,.6);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(247,172,59,.5);border-color:transparent}
+textarea{min-height:96px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:13px;color:var(--soft)}
+.check input{width:18px;height:18px;margin-top:2px;accent-color:var(--amber)}
+.hp{position:absolute;left:-9999px}
+.msg{display:none;border:1px solid var(--line);background:var(--glass);border-radius:22px;padding:28px}
+.msg h3{font-size:24px;margin:10px 0 6px}
+.err{color:#FF8A7A;font-size:14px;min-height:1em}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--soft);font-size:13px}
+footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.reveal{opacity:0;transform:translateY(22px);filter:blur(6px);transition:opacity .8s,transform .8s,filter .8s}
+.reveal.in{opacity:1;transform:none;filter:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;filter:none}.track{animation:none}}
+@media (max-width:860px){.hero,.signup{grid-template-columns:1fr}.steps{grid-template-columns:1fr}.links{display:none}.hero{padding-top:48px}}
+</style>
+</head>
+<body>
+<nav><div class="w">
+  <a class="logo" href="/"><i>✈</i><span>Tender<b>Pilot</b></span></a>
+  <div class="links"><a href="#how">How it works</a><a href="#who">Who it's for</a><a href="/tenders/">Open tenders</a></div>
+  <a class="btn small" href="#start">Start free ↗</a>
+</div></nav>
+
+<div class="w">
+  <div class="hero">
+    <div class="reveal">
+      <span class="tag mono">For small businesses that want government work</span>
+      <h1>Every morning, the government <span class="grad">contracts you can win</span></h1>
+      <p class="lead">Schools, hospitals and councils post thousands of jobs every week. We read them all and email you only the ones that fit your business, with a plain-English summary and the deadline.</p>
+      <div class="cta-row"><a class="btn" href="#start">Get my first email free →</a><span class="fine">14 days free · no card · 2 minutes</span></div>
+      <div class="facts mono"><span>Source · TED, the EU's tender database</span><span>Delivered · every weekday morning</span></div>
+    </div>
+    <div class="mail reveal" aria-label="Example morning email">
+      <div class="top"><b>TenderPilot</b><span><i class="dot"></i>07:00 · to you</span></div>
+      <h3>Good morning, Maria</h3>
+      <h4>3 new public tenders match what you do</h4>
+      <div class="job"><span class="pct">95%</span><div style="flex:1"><b>Cleaning of 5 state schools</b><small>Malta · Deadline 7 Jan</small><div class="bar" style="width:95%"></div></div></div>
+      <div class="job"><span class="pct">88%</span><div style="flex:1"><b>Office cleaning, government department</b><small>Malta · Deadline 21 Dec</small><div class="bar" style="width:88%"></div></div></div>
+      <div class="job"><span class="pct">74%</span><div style="flex:1"><b>Window cleaning, public buildings</b><small>Italy · Deadline 18 Dec</small><div class="bar" style="width:74%"></div></div></div>
+      <div class="foot mono">UNSUBSCRIBE FROM ANY EMAIL IN ONE CLICK</div>
+    </div>
+  </div>
+</div>
+
+<section id="how"><div class="w">
+  <h2 class="reveal">How it works</h2>
+  <p class="sub reveal">Three steps, once. After that it arrives on its own, every weekday morning.</p>
+  <div class="steps">
+    <div class="card reveal"><span class="n mono">01</span><h3>Describe your business</h3><p>What you do, where you work and the size of job you can handle. Two minutes, in your own words.</p></div>
+    <div class="card reveal"><span class="n mono">02</span><h3>We read every tender</h3><p>Our AI checks every new public tender across the EU and scores how well each one fits you.</p></div>
+    <div class="card reveal"><span class="n mono">03</span><h3>You get one short email</h3><p>Only real matches, with the deadline. No portals to check, no endless listings to scroll.</p></div>
+  </div>
+</div></section>
+
+<section id="who" style="padding-top:20px"><div class="w"><p class="label mono">Who we send tenders to</p></div>
+  <div class="marquee" aria-label="Trades we cover"><div class="track">
+    <span>Cleaning</span><span>Construction and repairs</span><span>Electrical and plumbing</span><span>IT and websites</span><span>Security</span><span>Catering</span><span>Charities and NGOs</span><span>Marketing and design</span><span>Translation</span>
+    <span aria-hidden="true">Cleaning</span><span aria-hidden="true">Construction and repairs</span><span aria-hidden="true">Electrical and plumbing</span><span aria-hidden="true">IT and websites</span><span aria-hidden="true">Security</span><span aria-hidden="true">Catering</span><span aria-hidden="true">Charities and NGOs</span><span aria-hidden="true">Marketing and design</span><span aria-hidden="true">Translation</span>
+  </div></div>
+</section>
+
+<section id="start"><div class="w signup">
+  <div class="reveal">
+    <p class="label mono">Free for 14 days, no card</p>
+    <h2>Get your first tender email <span class="grad">tomorrow</span></h2>
+    <p class="sub" style="margin-bottom:0">Tell us what you do and where you can work. We'll start matching public tenders to your business and email you the ones worth your time.</p>
+    <ul class="ticks"><li>One email each weekday morning</li><li>Plain-English summary and the deadline</li><li>Unsubscribe from any email, no questions</li></ul>
+  </div>
+  <div class="reveal">
+    <form id="f" novalidate>
+      <label class="hp" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+      <label>Company name<input name="company" required maxlength="120" autocomplete="organization" placeholder="Maria's Cleaning Services"></label>
+      <label>Email for the daily list<input name="email" type="email" required maxlength="160" autocomplete="email" placeholder="maria@company.com"></label>
+      <label>What does your business do?<span class="hint">In your own words, e.g. office and school cleaning, window cleaning, deep cleans</span><textarea name="does" required maxlength="800"></textarea></label>
+      <label>Countries you can work in<span class="hint">e.g. Malta, Italy</span><input name="countries" required maxlength="200" placeholder="Malta, Italy"></label>
+      <label>Biggest contract you could take on
+        <select name="max_value"><option value="50000">Up to €50,000</option><option value="200000" selected>Up to €200,000</option><option value="500000">Up to €500,000</option><option value="2000000">Up to €2 million</option><option value="0">Any size</option></select></label>
+      <label class="check"><input type="checkbox" name="consent" value="yes" required> Email me matching tenders every morning. I can unsubscribe from any email. See the <a href="/privacy">privacy note</a>.</label>
+      <p class="err" id="err" role="alert"></p>
+      <button class="btn" type="submit" id="go">Start my free trial →</button>
+    </form>
+    <div class="msg" id="done"><span class="pct">✓</span><h3>You're in.</h3><p style="color:var(--soft);margin:0">Your first email arrives the next weekday morning. Check your spam folder the first time and mark us as “not spam”.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="w">
+  <span>TenderPilot · Data from TED, the EU's official public tender database. Always read the official notice before you apply.</span>
+  <span><a href="/tenders/">Open tenders</a> · <a href="/privacy">Privacy</a> · <a href="/unsubscribe">Unsubscribe</a></span>
+</div></footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+const f=document.getElementById("f"),err=document.getElementById("err"),go=document.getElementById("go");
+f.addEventListener("submit",async e=>{
+  e.preventDefault();err.textContent="";
+  if(!f.checkValidity()){err.textContent="Please fill in every field and tick the box.";f.reportValidity();return}
+  go.disabled=true;go.textContent="Saving…";
+  try{
+    const r=await fetch("/api/signup",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(Object.fromEntries(new FormData(f)))});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(j.error||"Something went wrong. Please try again.");
+    f.style.display="none";document.getElementById("done").style.display="block";
+  }catch(x){err.textContent=x.message;go.disabled=false;go.textContent="Start my free trial →"}
+});
+</script>
+</body>
+</html>
