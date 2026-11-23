@@ -165,6 +165,10 @@ def build():
     (OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sitemap}</urlset>', encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n", encoding="utf-8")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
+    static = Path(__file__).resolve().parent / "static"  # e.g. Google's verification file
+    for f in static.glob("*") if static.exists() else []:
+        if f.is_file():
+            (OUT / f.name).write_bytes(f.read_bytes())
     print(f"{len(urls)} pages written")
 
 
