@@ -14,7 +14,7 @@ from pathlib import Path
 import httpx
 
 SIGNUP = "/#start"  # the sign-up form on the home page
-BASE_URL = "https://tenderpilot.pages.dev"  # set SITE_BASE in the Cloudflare build settings once there is a domain
+BASE_URL = "https://tenderpilot-eu.pages.dev"  # set SITE_BASE in the Cloudflare build settings once there is a domain
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "public"
 TEN = OUT / "tenders"  # tender pages live under /tenders/
