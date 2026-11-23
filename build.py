@@ -100,10 +100,15 @@ footer{padding:28px 0 40px;font-size:13px;color:var(--soft)}"""
 def page(title: str, desc: str, body: str, path: str) -> str:
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title><meta name="description" content="{html.escape(desc)}">
-<link rel="canonical" href="{BASE_URL}/tenders/{path}"><style>{CSS}</style></head><body><div class="w">
+<link rel="canonical" href="{BASE_URL}/tenders/{clean(path)}"><style>{CSS}</style></head><body><div class="w">
 <nav><a href="/">Tender<span>Pilot</span></a> <a href="/tenders/" style="font-size:14px;font-weight:400;margin-left:14px;color:inherit;opacity:.7">All open tenders</a></nav>{body}
 <footer>Updated {date.today():%d %B %Y}. Data from TED, the EU's official public tender database. Always read the official notice before you apply.</footer>
 </div></body></html>"""
+
+
+def clean(path: str) -> str:
+    """Cloudflare serves x.html at /x: link to the clean address so nothing redirects."""
+    return path[:-5] if path.endswith(".html") else path
 
 
 def money(t):
@@ -150,7 +155,7 @@ def build():
                 f'New ones appear often. Get them by email the morning they are published.</p>')
             (TEN / path).write_text(page(title, desc, intro + cta(people, f"{name.lower()} tenders in {cname}") + listing, path), encoding="utf-8")
             urls.append(path)
-            links.append(f'<a href="{path}">{cname} ({n})</a>')
+            links.append(f'<a href="{clean(path)}">{cname} ({n})</a>')
             totals[slug] += n
         hub = f"{slug}-tenders.html"
         title = f"{name} tenders in Europe: {totals[slug]} open now"
@@ -158,7 +163,7 @@ def build():
                 f'<div class="grid">{"".join(links)}</div>' + cta(people, f"{name.lower()} tenders"))
         (TEN / hub).write_text(page(title, f"Open public {name.lower()} tenders in every EU country, updated daily.", body, hub), encoding="utf-8")
         urls.append(hub)
-        index_links.append(f'<a href="{hub}">{name} ({totals[slug]})</a>')
+        index_links.append(f'<a href="{clean(hub)}">{name} ({totals[slug]})</a>')
         print(f"{name}: {len(tenders)} open tenders")
         time.sleep(1)
     body = ('<p class="eye">Public tenders, updated daily</p><h1>Find government contracts your business can win</h1>'
@@ -167,7 +172,7 @@ def build():
     (TEN / "index.html").write_text(page("Public tenders by trade and country | TenderPilot",
                                          "Open government tenders in every EU country, by trade, updated daily.", body, ""), encoding="utf-8")
     urls.append("")
-    pages = [""] + [f"tenders/{u}" for u in urls] + ["privacy"]
+    pages = [""] + [f"tenders/{clean(u)}" for u in urls] + ["privacy"]
     sitemap = "".join(f"<url><loc>{BASE_URL}/{u}</loc><lastmod>{date.today()}</lastmod></url>" for u in pages)
     (OUT / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{sitemap}</urlset>', encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {BASE_URL}/sitemap.xml\n", encoding="utf-8")
